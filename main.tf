@@ -20,4 +20,4 @@ resource "aws_instance" "app_server" {
   tags = {
     Name = "learn-terraform"
   }
-} #additional comment 3rd commit
+} #additional comment 4th commit

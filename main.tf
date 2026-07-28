@@ -13,4 +13,4 @@ resource "aws_s3_bucket" "dev_bucket" {
     Environment = "dev"
     ManagedBy   = "terraform"
   }
-} #17th commit for dev env only
+} #2nd commit for dev env only

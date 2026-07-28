@@ -1,23 +1,16 @@
 provider "aws" {
-  region = "ap-southeast-1"
+  region = var.aws_region
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
+data "aws_caller_identity" "current" {}
 
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-resource "aws_instance" "app_server" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+resource "aws_s3_bucket" "dev_bucket" {
+  bucket        = "${var.project_name}-dev-bucket-${data.aws_caller_identity.current.account_id}"
+  force_destroy = true
 
   tags = {
-    Name = "learn-terraform"
+    Name        = "${var.project_name}-dev"
+    Environment = "dev"
+    ManagedBy   = "terraform"
   }
-} #additional comment 5th commit
+} #7th commit for dev env only

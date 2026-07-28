@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "ap-southeast-1"
+  region = var.aws_region
 }
 
 data "aws_ami" "ubuntu" {
@@ -15,9 +15,11 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
 
   tags = {
-    Name = "learn-terraform"
+    Name        = "${var.project_name}-dev"
+    Environment = "dev"
+    ManagedBy   = "terraform"
   }
-} #additional comment 5th commit
+} #6th commit for dev env only

@@ -13,4 +13,13 @@ resource "aws_s3_bucket" "dev_bucket" {
     Environment = "dev"
     ManagedBy   = "terraform"
   }
-} #2nd commit for dev env only
+}
+
+resource "aws_instance" "app_server" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
+
+  tags = {
+    Name = var.instance_name
+  }
+}

@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - dev
+#      - main
+#  pull_request:
+#    branches:
+#      - main
 
 permissions:
   id-token: write
@@ -20,6 +24,13 @@ jobs:
       TF_VAR_availability_zones: ${{ vars.TF_VAR_AVAILABILITY_ZONES }}
       TF_VAR_private_subnets: ${{ vars.TF_VAR_PRIVATE_SUBNETS }}
       TF_VAR_public_subnets: ${{ vars.TF_VAR_PUBLIC_SUBNETS }}
+      #commented below lines to be used for main branch deployment with separate github repo variables for prod aws environment. Uncomment the below lines to use them for main branch deployment.
+#      AWS_ROLE_ARN: $ {{ github.ref == 'refs/heads/main' && secrets.AWS_ROLE_ARN_PROD || secrets.AWS_ROLE_ARN_DEV }}
+#      TF_VAR_vpc_name: $ {{ github.ref == 'refs/heads/main' && vars.TF_VAR_VPC_NAME_PROD || vars.TF_VAR_VPC_NAME }}
+#      TF_VAR_vpc_cidr: $ {{ github.ref == 'refs/heads/main' && vars.TF_VAR_VPC_CIDR_PROD || vars.TF_VAR_VPC_CIDR }}
+#      TF_VAR_availability_zones: $ {{ github.ref == 'refs/heads/main' && vars.TF_VAR_AVAILABILITY_ZONES_PROD || vars.TF_VAR_AVAILABILITY_ZONES }}
+#      TF_VAR_private_subnets: $ {{ github.ref == 'refs/heads/main' && vars.TF_VAR_PRIVATE_SUBNETS_PROD || vars.TF_VAR_PRIVATE_SUBNETS }}
+#      TF_VAR_public_subnets: $ {{ github.ref == 'refs/heads/main' && vars.TF_VAR_PUBLIC_SUBNETS_PROD || vars.TF_VAR_PUBLIC_SUBNETS }}
 
     steps:
       - name: Checkout code

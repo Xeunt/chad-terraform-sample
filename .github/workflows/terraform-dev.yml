@@ -46,6 +46,7 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -var="aws_region=${{ env.AWS_REGION }}"
 #line below is for testing purposes only, remove it in production. It destroys immediately after provisioning the resources.
+#added new line of comment
       - name: Terraform Destroy
         if: success()
         run: terraform destroy -auto-approve -var="aws_region=${{ env.AWS_REGION }}"

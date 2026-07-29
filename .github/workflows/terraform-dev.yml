@@ -41,12 +41,32 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -var="aws_region=${{ env.AWS_REGION }}"
+        run: |
+          terraform plan \
+            -var="aws_region=${{ env.AWS_REGION }}" \
+            -var="vpc_name=${{ vars.VPC_NAME }}" \
+            -var="vpc_cidr=${{ vars.VPC_CIDR }}" \
+            -var="availability_zones=${{ vars.VPC_AZS }}" \
+            -var="private_subnets=${{ vars.VPC_PRIVATE_SUBNETS }}" \
+            -var="public_subnets=${{ vars.VPC_PUBLIC_SUBNETS }}"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var="aws_region=${{ env.AWS_REGION }}"
-#line below is for testing purposes only, remove it in production. It destroys immediately after provisioning the resources.
-#added new line of comment
+        run: |
+          terraform apply -auto-approve \
+            -var="aws_region=${{ env.AWS_REGION }}" \
+            -var="vpc_name=${{ vars.VPC_NAME }}" \
+            -var="vpc_cidr=${{ vars.VPC_CIDR }}" \
+            -var="availability_zones=${{ vars.VPC_AZS }}" \
+            -var="private_subnets=${{ vars.VPC_PRIVATE_SUBNETS }}" \
+            -var="public_subnets=${{ vars.VPC_PUBLIC_SUBNETS }}"
+
       - name: Terraform Destroy
         if: success()
-        run: terraform destroy -auto-approve -var="aws_region=${{ env.AWS_REGION }}"
+        run: |
+          terraform destroy -auto-approve \
+            -var="aws_region=${{ env.AWS_REGION }}" \
+            -var="vpc_name=${{ vars.VPC_NAME }}" \
+            -var="vpc_cidr=${{ vars.VPC_CIDR }}" \
+            -var="availability_zones=${{ vars.VPC_AZS }}" \
+            -var="private_subnets=${{ vars.VPC_PRIVATE_SUBNETS }}" \
+            -var="public_subnets=${{ vars.VPC_PUBLIC_SUBNETS }}"

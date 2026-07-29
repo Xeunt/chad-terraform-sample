@@ -15,6 +15,11 @@ jobs:
 
     env:
       AWS_REGION: ap-southeast-1
+      TF_VAR_vpc_name: ${{ vars.TF_VAR_VPC_NAME }}
+      TF_VAR_vpc_cidr: ${{ vars.TF_VAR_VPC_CIDR }}
+      TF_VAR_availability_zones: ${{ vars.TF_VAR_AVAILABILITY_ZONES }}
+      TF_VAR_private_subnets: ${{ vars.TF_VAR_PRIVATE_SUBNETS }}
+      TF_VAR_public_subnets: ${{ vars.TF_VAR_PUBLIC_SUBNETS }}
 
     steps:
       - name: Checkout code
@@ -43,30 +48,15 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform plan \
-            -var="aws_region=${{ env.AWS_REGION }}" \
-            -var="vpc_name=${{ vars.VPC_NAME }}" \
-            -var="vpc_cidr=${{ vars.VPC_CIDR }}" \
-            -var="availability_zones=${{ vars.VPC_AZS }}" \
-            -var="private_subnets=${{ vars.VPC_PRIVATE_SUBNETS }}" \
-            -var="public_subnets=${{ vars.VPC_PUBLIC_SUBNETS }}"
+            -var="aws_region=${{ env.AWS_REGION }}"
 
       - name: Terraform Apply
         run: |
           terraform apply -auto-approve \
-            -var="aws_region=${{ env.AWS_REGION }}" \
-            -var="vpc_name=${{ vars.VPC_NAME }}" \
-            -var="vpc_cidr=${{ vars.VPC_CIDR }}" \
-            -var="availability_zones=${{ vars.VPC_AZS }}" \
-            -var="private_subnets=${{ vars.VPC_PRIVATE_SUBNETS }}" \
-            -var="public_subnets=${{ vars.VPC_PUBLIC_SUBNETS }}"
+            -var="aws_region=${{ env.AWS_REGION }}"
 
       - name: Terraform Destroy
         if: success()
         run: |
           terraform destroy -auto-approve \
-            -var="aws_region=${{ env.AWS_REGION }}" \
-            -var="vpc_name=${{ vars.VPC_NAME }}" \
-            -var="vpc_cidr=${{ vars.VPC_CIDR }}" \
-            -var="availability_zones=${{ vars.VPC_AZS }}" \
-            -var="private_subnets=${{ vars.VPC_PRIVATE_SUBNETS }}" \
-            -var="public_subnets=${{ vars.VPC_PUBLIC_SUBNETS }}"
+            -var="aws_region=${{ env.AWS_REGION }}"

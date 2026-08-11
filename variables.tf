@@ -42,7 +42,7 @@ variable "public_subnets" {
   type = list(string)
 }
 
-##--------------------
+##-------------------- comment test aug 11 2026 2:48 PM PHT
 
 
 
